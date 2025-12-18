@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book Summary The Oracle’s Playbook – Warren Buffett Rules</title>
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#22c55e;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+  background:linear-gradient(180deg,#020617,#0f172a);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+header{
+  text-align:center;
+  padding:30px 10px;
+}
+
+header h1{
+  font-size:clamp(1.6rem,4vw,2.5rem);
+  margin-bottom:10px;
+}
+
+header p{
+  color:var(--muted);
+  font-size:1rem;
+}
+
+.rules{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+  margin-top:20px;
+}
+
+.card{
+  background:linear-gradient(145deg,#020617,#111827);
+  border-radius:16px;
+  padding:18px;
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,.4);
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.6);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(34,197,94,.15),transparent);
+  opacity:0;
+  transition:.3s;
+}
+
+.card:hover::before{opacity:1}
+
+.number{
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.card h3{
+  margin:8px 0;
+  font-size:1.1rem;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:.95rem;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+}
+
+.card.active p{
+  max-height:200px;
+}
+
+footer{
+  margin-top:40px;
+  text-align:center;
+  font-size:.85rem;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>💼 Book Summary The INTELLIGENT INVESTOR</h1>
+  <p>Warren Buffett’s 19 Golden Rules for Wealth & Wisdom</p>
+</header>
+
+<section class="rules">
+
+  <div class="card">
+    <div class="number">1</div>
+    <h3>Protect Your Downside First</h3>
+    <p>Never lose money — and never forget it. Focus on safety before chasing returns.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">2</div>
+    <h3>Seek Value, Not Hype</h3>
+    <p>Buy great businesses at fair prices, not average ones just because they look cheap.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">3</div>
+    <h3>Think Like an Owner</h3>
+    <p>Stocks represent ownership in businesses, not lottery tickets.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">4</div>
+    <h3>Embrace Patience</h3>
+    <p>Compounding rewards time in the market, not timing the market.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">5</div>
+    <h3>Be Contrarian (Wisely)</h3>
+    <p>Be greedy when others are fearful and cautious when others are greedy.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">6</div>
+    <h3>Avoid Market Predictions</h3>
+    <p>Short-term forecasting fails. Long-term discipline wins.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">7</div>
+    <h3>Circle of Competence</h3>
+    <p>Invest only in what you deeply understand.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">8</div>
+    <h3>Diversify Smartly</h3>
+    <p>Over-diversification dilutes conviction and returns.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">9</div>
+    <h3>Maintain Financial Strength</h3>
+    <p>Cash gives you power when opportunities appear.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">10</div>
+    <h3>Respect Risk</h3>
+    <p>Risk comes from ignorance, not volatility.</p>
+  </div>
+
+  <div class="card">
+    <div class="number">11–19</div>
+    <h3>Billionaire DNA Mindset</h3>
+    <p>
+      Learn from mistakes • Avoid complexity • Reward merit, not luck • Shun speculation • Build economic moats • Choose partners wisely • Control emotions • Trust timeless fundamentals • Keep learning endlessly
+    </p>
+  </div>
+
+</section>
+
+<footer>
+  Inspired by Warren Buffett’s timeless investment philosophy
+</footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    card.classList.toggle('active');
+  });
+});
+</script>
+</body>
+</html>
