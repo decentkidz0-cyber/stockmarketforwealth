@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📈 Uncommon Investing</title>
+
+<style>
+:root{
+  --bg: #0a0f24;
+  --card: #111a33;
+  --accent: #3b82f6;
+  --text: #e0e7ff;
+  --muted: #94a3b8;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  padding:0;
+  font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+  background: linear-gradient(145deg, #02061a, #0a0f24);
+  color: var(--text);
+}
+.container{
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+header{
+  text-align:center;
+  padding:30px 10px;
+}
+header h1{
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color: var(--accent);
+}
+header p{
+  color: var(--muted);
+  font-size:1rem;
+}
+.rules{
+  display:grid;
+  gap:18px;
+  margin-top:25px;
+}
+.card{
+  background: var(--card);
+  border-radius: 14px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  transition: 0.3s ease;
+  cursor:pointer;
+  overflow:hidden;
+}
+.card:hover{
+  transform: translateY(-4px);
+  box-shadow:0 14px 30px rgba(0,0,0,0.6);
+}
+.card h3{
+  margin:0 0 8px;
+  font-size:1.2rem;
+  color: var(--accent);
+}
+.card p{
+  margin:0;
+  color: var(--muted);
+  font-size:0.95rem;
+  max-height:0;
+  overflow:hidden;
+  transition: max-height .4s ease;
+}
+.card.active p{
+  max-height:300px;
+}
+footer{
+  text-align:center;
+  margin-top:40px;
+  font-size:0.85rem;
+  color: var(--muted);
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>📈 Common Stocks Uncommon Profit </h1>
+  <p>Top Takeaways from “Common Stocks & Uncommon Profits”</p>
+</header>
+
+<section class="rules">
+
+  <div class="card">
+    <h3>1. Invest in Great Companies</h3>
+    <p>Seek businesses with durable competitive advantages, not just cheap stock prices. True value lies in fundamentals and future earnings potential. :contentReference[oaicite:1]{index=1}</p>
+  </div>
+
+  <div class="card">
+    <h3>2. Focus on Long-Term Growth</h3>
+    <p>Patience is key. The biggest gains come from holding quality stocks for years, not trading constantly. :contentReference[oaicite:2]{index=2}</p>
+  </div>
+
+  <div class="card">
+    <h3>3. Understand the Business</h3>
+    <p>Only invest in companies you truly understand — their industry, model, and risks. Knowledge reduces costly mistakes. :contentReference[oaicite:3]{index=3}</p>
+  </div>
+
+  <div class="card">
+    <h3>4. Management Matters</h3>
+    <p>Great leadership drives growth. Look for CEOs and teams that allocate capital wisely and build shareholder value. :contentReference[oaicite:4]{index=4}</p>
+  </div>
+
+  <div class="card">
+    <h3>5. Look Beyond the Numbers</h3>
+    <p>Quantitative metrics alone aren’t enough. Qualitative analysis — like company culture and strategy — reveals deeper insight. :contentReference[oaicite:5]{index=5}</p>
+  </div>
+
+  <div class="card">
+    <h3>6. Avoid Emotional Trading</h3>
+    <p>Don’t chase hype or panic sell. Successful investors act with discipline and stick to their research. :contentReference[oaicite:6]{index=6}</p>
+  </div>
+
+</section>
+
+<footer>
+  Based on key lessons from the video *Common Stocks and Uncommon Profits Summary* ✨ :contentReference[oaicite:7]{index=7}
+</footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click', ()=> card.classList.toggle('active'));
+});
+</script>
+</body>
+</html>
