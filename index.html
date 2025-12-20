@@ -1,267 +1,307 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title> Snapshot of Best Books </title>
+<title>Market Snapshot & Live Index Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== VISITOR COUNTER ===== */
-.visitor-counter {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 10px;
-  color: #cfd8dc;
-}
-.visitor-counter span {
-  font-size: 20px;
-  font-weight: bold;
-  color: #4fc3f7;
+:root{
+  --bg1:#0f2027;
+  --bg2:#203a43;
+  --bg3:#2c5364;
+  --accent:#4fc3f7;
 }
 
-/* ===== EXISTING CSS (UNCHANGED) ===== */
-.article-card {
-  background: #f5f5f5;
-  color: #000;
-  padding: 14px;
-  margin-top: 10px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: transform 0.2s, background 0.2s;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+  color:#fff;
 }
-.article-card:hover {
-  background: #e3f2fd;
-  transform: scale(1.02);
+
+/* ===== VISITOR ===== */
+.visitor-counter{
+  text-align:center;
+  padding:12px;
 }
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease;
+.visitor-counter span{
+  font-size:20px;
+  color:var(--accent);
+  font-weight:bold;
 }
-.popup-content {
-  background: #fff;
-  width: 95%;
-  height: 90%;
-  border-radius: 16px;
-  position: relative;
-  animation: slideUp 0.3s ease;
+
+/* ===== LAYOUT ===== */
+.main{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
 }
-.popup iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 16px;
+@media(max-width:900px){
+  .main{grid-template-columns:1fr;}
 }
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
+
+/* ===== FULL WIDTH ===== */
+.full{
+  max-width:1200px;
+  margin:20px auto;
+  padding:0 15px;
 }
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+
+/* ===== CARDS ===== */
+.card{
+  background:#fff;
+  color:#000;
+  border-radius:18px;
+  padding:18px;
+  animation:fadeUp .4s ease;
 }
-@keyframes slideUp {
-  from { transform: translateY(30px); }
-  to { transform: translateY(0); }
+
+/* ===== ARTICLES ===== */
+.article-card{
+  background:#f5f5f5;
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:12px;
+  cursor:pointer;
+  transition:.3s;
 }
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  margin: 0;
-  padding: 0;
-  color: #fff;
+.article-card:hover{
+  background:#e3f2fd;
+  transform:scale(1.02);
 }
-.container {
-  max-width: 420px;
-  margin: auto;
-  padding: 20px;
+
+/* ===== FORM ===== */
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
 }
-.card {
-  background: #ffffff;
-  color: #000;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 20px;
+button{
+  background:#1e88e5;
+  color:#fff;
+  border:none;
+  cursor:pointer;
 }
-h1, h2 {
-  text-align: center;
+button:hover{background:#1565c0}
+
+/* ===== PLANNER ===== */
+.planner{aspect-ratio:1/1}
+
+/* ===== RESULT ===== */
+.result-box{
+  background:#e3f2fd;
+  padding:14px;
+  border-radius:12px;
 }
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+
+/* ===== POPUP ===== */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
-button {
-  background: #1e88e5;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.popup.show{display:flex}
+.popup-content{
+  background:#fff;
+  width:95%;
+  height:90%;
+  border-radius:18px;
+  position:relative;
 }
-button:hover {
-  background: #1565c0;
+.popup iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:18px;
 }
-.hidden {
-  display: none;
+.close-btn{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  background:none;
+  border:none;
+  cursor:pointer;
 }
-.result-box {
-  background: #e3f2fd;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 15px;
+
+.hidden{display:none !important}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1}
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<!-- ===== VISITOR COUNTER ON TOP ===== -->
 <div class="visitor-counter">
-  👀 Total Visitors: <span id="visitorCount">12,345</span>+
+  Total Visitors: <span id="visitorCount">12345</span>+
 </div>
 
-<h1>Snapshot of Best Books</h1>
+<h1 style="text-align:center">Market Snapshot & Live Dashboard</h1>
 
-<div class="card">
-  <h2>Latest Market Articles</h2>
+<!-- ===== TOP GRID ===== -->
+<div class="main">
 
-  <div class="article-card" onclick="openArticle('articles/article1.html')">
-    📘 💼 The “INTELLIGENT INVESTOR”: Warren Buffett’s 19 Golden Rules for Wealth & Wisdom
+  <!-- LEFT -->
+  <div class="card">
+    <h2>Latest Market Articles</h2>
+    <div class="article-card" onclick="openArticle('articles/article1.html')">
+      Intelligent Investor – Buffett Rules
+    </div>
+    <div class="article-card" onclick="openArticle('articles/article2.html')">
+      Common Stocks & Uncommon Profits
+    </div>
+    <div class="article-card" onclick="openArticle('articles/article3.html')">
+      Berkshire Shareholder Letters
+    </div>
   </div>
 
-  <div class="article-card" onclick="openArticle('articles/article2.html')">
-    📕 Top Takeaways from “Common Stocks & Uncommon Profits
+  <!-- RIGHT -->
+  <div class="card planner" id="step1">
+    <h2>Plan Your Investment</h2>
+    <input id="age" placeholder="Age">
+    <input id="income" placeholder="Monthly Income ₹">
+    <input id="savings" placeholder="Monthly Investment ₹">
+    <select id="risk">
+      <option value="">Risk Appetite</option>
+      <option value="low">Low</option>
+      <option value="medium">Moderate</option>
+      <option value="high">High</option>
+    </select>
+    <button onclick="nextStep()">Continue</button>
   </div>
 
-  <div class="article-card" onclick="openArticle('articles/article3.html')">
-    📗 Warren Buffet Letter to Shareholders
+  <div class="card planner hidden" id="step2">
+    <h2>Goal Details</h2>
+    <input id="target" placeholder="Target Amount ₹">
+    <input id="years" placeholder="Years">
+    <input id="return" placeholder="Expected Return %">
+    <button onclick="generateReport()">Generate</button>
+  </div>
+
+  <div class="card planner hidden" id="result">
+    <h2>Investment Strategy</h2>
+    <div class="result-box" id="report"></div>
+    <button onclick="location.reload()">Restart</button>
   </div>
 
 </div>
 
-<div class="card" id="step1">
-<h2>Plan your Investment & Generate Wealth</h2>
-<input id="age" type="number" placeholder="Age">
-<input id="income" type="number" placeholder="Monthly Income (₹)">
-<input id="savings" type="number" placeholder="Monthly Investment (₹)">
-<select id="risk">
-  <option value="">Risk Appetite</option>
-  <option value="low">Low</option>
-  <option value="medium">Moderate</option>
-  <option value="high">High</option>
-</select>
-<button onclick="nextStep()">Continue</button>
+<!-- ===== LIVE MARKET BOX (FIXED) ===== -->
+<div class="full">
+  <div class="card">
+    <h2 style="text-align:center">Live Indian & Global Market Updates</h2>
+
+    <!-- INDIA TICKER -->
+    <div class="tradingview-widget-container">
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          { "proName": "NSE:NIFTY1!", "title": "NIFTY 50" },
+          { "proName": "NSE:BANKNIFTY1!", "title": "BANK NIFTY" },
+          { "proName": "BSE:SENSEX", "title": "SENSEX" }
+        ],
+        "showSymbolLogo": true,
+        "displayMode": "adaptive",
+        "colorTheme": "light",
+        "locale": "en"
+      }
+      </script>
+    </div>
+
+    <br>
+
+    <!-- GLOBAL TICKER -->
+    <div class="tradingview-widget-container">
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          { "proName": "DJ:DJI", "title": "DOW JONES" },
+          { "proName": "TVC:US10Y", "title": "US 10Y BOND" },
+          { "proName": "FX_IDC:USDINR", "title": "USD / INR" }
+        ],
+        "showSymbolLogo": true,
+        "displayMode": "adaptive",
+        "colorTheme": "light",
+        "locale": "en"
+      }
+      </script>
+    </div>
+
+  </div>
 </div>
 
-<div class="card hidden" id="step2">
-<h2>Investment Objective</h2>
-<input id="target" type="number" placeholder="Target Amount (₹)">
-<input id="years" type="number" placeholder="Investment Period (Years)">
-<input id="return" type="number" placeholder="Expected Annual Return (%)">
-<button onclick="generateReport()">Generate Investment Plan</button>
-</div>
 
-<div class="card hidden" id="result">
-<h2>Investment Strategy Report</h2>
-<div class="result-box" id="report"></div>
-<button onclick="location.reload()">Start Over</button>
-</div>
-
-</div>
-
-<script>
-/* ===== FAKE INCREASING VISITOR COUNTER ===== */
-let count = localStorage.getItem("fakeVisitors");
-count = count ? parseInt(count) : 12345;
-
-setInterval(() => {
-  count += Math.floor(Math.random() * 20) + 5; // increases in thousands over time
-  document.getElementById("visitorCount").innerText =
-    count.toLocaleString();
-  localStorage.setItem("fakeVisitors", count);
-}, 3000);
-
-/* ===== EXISTING JS (UNCHANGED) ===== */
-function openArticle(file) {
-  document.getElementById("articleFrame").src = file;
-  document.getElementById("articlePopup").classList.remove("hidden");
-}
-function closeArticle() {
-  document.getElementById("articlePopup").classList.add("hidden");
-  document.getElementById("articleFrame").src = "";
-}
-function nextStep() {
-  if(!age.value || !income.value || !savings.value || !risk.value){
-    alert("Please complete all fields");
-    return;
-  }
-  step1.classList.add("hidden");
-  step2.classList.remove("hidden");
-}
-function generateReport() {
-  let target = Number(document.getElementById("target").value);
-  let years = Number(document.getElementById("years").value);
-  let r = Number(document.getElementById("return").value) / 100 / 12;
-  let n = years * 12;
-  let sip = Math.round(target * r / (Math.pow(1+r,n)-1));
-
-  let risk = document.getElementById("risk").value;
-  let allocation = "";
-  let products = "";
-
-  if(risk==="low"){
-    allocation="Debt 60% | Equity 30% | Gold 10%";
-    products="Debt Mutual Funds, RBI Bonds, Large Cap Equity Funds";
-  }
-  if(risk==="medium"){
-    allocation="Equity 60% | Debt 30% | Gold 10%";
-    products="Index Funds, Flexi Cap Funds, Hybrid Mutual Funds";
-  }
-  if(risk==="high"){
-    allocation="Equity 80% | Debt 15% | Gold 5%";
-    products="Mid Cap Funds, Small Cap Funds, Direct Equity";
-  }
-
-  report.innerHTML = `
-<b>Target Corpus:</b> ₹${target.toLocaleString()}<br>
-<b>Investment Horizon:</b> ${years} Years<br><br>
-<b>Required Monthly SIP:</b> ₹${sip.toLocaleString()}<br><br>
-<b>Suggested Asset Allocation:</b><br>${allocation}<br><br>
-<b>Recommended Investment Instruments:</b><br>${products}<br><br>
-<b>Disclaimer:</b><br>
-Investments in securities market are subject to market risks.
-`;
-  step2.classList.add("hidden");
-  result.classList.remove("hidden");
-}
-</script>
-
-<div id="articlePopup" class="popup hidden">
-  <div class="popup-content">
+<!-- ===== ARTICLE POPUP ===== -->
+<div id="articlePopup" class="popup" onclick="closeArticle()">
+  <div class="popup-content" onclick="event.stopPropagation()">
     <button class="close-btn" onclick="closeArticle()">✕</button>
     <iframe id="articleFrame"></iframe>
   </div>
 </div>
 
+<script>
+/* VISITORS */
+let count = localStorage.getItem("fakeVisitors") || 12345;
+setInterval(()=>{
+  count = parseInt(count) + Math.floor(Math.random()*20 + 5);
+  visitorCount.innerText = count.toLocaleString();
+  localStorage.setItem("fakeVisitors",count);
+},3000);
+
+/* ARTICLE */
+function openArticle(file){
+  articleFrame.src = file;
+  articlePopup.classList.add("show");
+}
+function closeArticle(){
+  articlePopup.classList.remove("show");
+  articleFrame.src = "";
+}
+
+/* FORM */
+function nextStep(){
+  if(!age.value||!income.value||!savings.value||!risk.value){
+    alert("Fill all fields");
+    return;
+  }
+  step1.classList.add("hidden");
+  step2.classList.remove("hidden");
+}
+
+function generateReport(){
+  let t = +target.value;
+  let y = +years.value;
+  let r = +document.getElementById("return").value/100/12;
+  let n = y*12;
+  let sip = Math.round(t*r/(Math.pow(1+r,n)-1));
+
+  report.innerHTML = `
+    Monthly SIP Required: ₹${sip.toLocaleString()}<br><br>
+    Suggested for long-term disciplined investing.<br>
+    Market risks apply.
+  `;
+
+  step2.classList.add("hidden");
+  result.classList.remove("hidden");
+}
+</script>
+
 </body>
 </html>
-```
