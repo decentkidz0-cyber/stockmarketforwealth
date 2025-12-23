@@ -2,254 +2,910 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Market Snapshot & Live Index Dashboard</title>
+<title>StockMarketForWealth.com - Your Investment Journey Starts Here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg1:#0f2027;
-  --bg2:#203a43;
-  --bg3:#2c5364;
-  --accent:#4fc3f7;
+  --primary:#1a237e;
+  --secondary:#0d47a1;
+  --accent:#00e676;
+  --accent2:#ffd600;
+  --danger:#ff1744;
+  --success:#00c853;
+  --dark:#0a0e27;
+  --light:#f5f7fa;
+  --card-bg:#ffffff;
+  --text-dark:#1a1a1a;
+  --text-light:#666;
+  --shadow:0 10px 40px rgba(0,0,0,0.1);
+  --shadow-hover:0 15px 50px rgba(0,0,0,0.2);
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
-  color:#fff;
+  font-family:'Poppins', sans-serif;
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color:var(--text-dark);
+  overflow-x:hidden;
+  position:relative;
 }
 
-/* ===== VISITOR ===== */
-.visitor-counter{
-  text-align:center;
-  padding:12px;
-}
-.visitor-counter span{
-  font-size:20px;
-  color:var(--accent);
-  font-weight:bold;
+/* ===== ANIMATED BACKGROUND ===== */
+.bg-animation{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
 }
 
-/* ===== LAYOUT ===== */
-.main{
+.floating-shape{
+  position:absolute;
+  border-radius:50%;
+  opacity:0.1;
+  animation:float 20s infinite ease-in-out;
+}
+
+.shape1{
+  width:300px;
+  height:300px;
+  background:var(--accent);
+  top:10%;
+  left:10%;
+  animation-delay:0s;
+}
+
+.shape2{
+  width:200px;
+  height:200px;
+  background:var(--accent2);
+  top:60%;
+  right:10%;
+  animation-delay:5s;
+}
+
+.shape3{
+  width:150px;
+  height:150px;
+  background:#00e5ff;
+  bottom:10%;
+  left:50%;
+  animation-delay:10s;
+}
+
+@keyframes float{
+  0%, 100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(30px,-30px) rotate(90deg)}
+  50%{transform:translate(-20px,20px) rotate(180deg)}
+  75%{transform:translate(40px,10px) rotate(270deg)}
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(10px);
+  padding:20px 0;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+  animation:slideDown 0.5s ease;
+}
+
+@keyframes slideDown{
+  from{transform:translateY(-100%)}
+  to{transform:translateY(0)}
+}
+
+.header-content{
   max-width:1200px;
   margin:auto;
-  padding:15px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-@media(max-width:900px){
-  .main{grid-template-columns:1fr;}
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
-/* ===== FULL WIDTH ===== */
-.full{
-  max-width:1200px;
-  margin:20px auto;
-  padding:0 15px;
+.logo{
+  font-size:26px;
+  font-weight:700;
+  background:linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:pulse 2s infinite;
 }
 
-/* ===== CARDS ===== */
-.card{
-  background:#fff;
-  color:#000;
-  border-radius:18px;
-  padding:18px;
-  animation:fadeUp .4s ease;
+@keyframes pulse{
+  0%, 100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
 }
 
-/* ===== ARTICLES ===== */
-.article-card{
-  background:#f5f5f5;
-  padding:14px;
-  border-radius:14px;
-  margin-bottom:12px;
-  cursor:pointer;
-  transition:.3s;
-}
-.article-card:hover{
-  background:#e3f2fd;
-  transform:scale(1.02);
-}
-
-/* ===== FORM ===== */
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-button{
-  background:#1e88e5;
+.visitor-badge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg, var(--accent), var(--success));
+  padding:10px 20px;
+  border-radius:30px;
   color:#fff;
-  border:none;
-  cursor:pointer;
+  font-weight:600;
+  box-shadow:0 5px 15px rgba(0,230,118,0.3);
+  animation:bounce 2s infinite;
 }
-button:hover{background:#1565c0}
+
+@keyframes bounce{
+  0%, 100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
+
+.visitor-count{
+  font-size:20px;
+  font-weight:700;
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:60px 20px;
+  color:#fff;
+}
+
+.hero h1{
+  font-size:48px;
+  font-weight:700;
+  margin-bottom:20px;
+  animation:fadeInUp 0.8s ease;
+  text-shadow:2px 2px 20px rgba(0,0,0,0.3);
+}
+
+.hero p{
+  font-size:20px;
+  opacity:0.95;
+  animation:fadeInUp 1s ease;
+  max-width:700px;
+  margin:0 auto 30px;
+}
+
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.cta-buttons{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+  animation:fadeInUp 1.2s ease;
+}
+
+.btn{
+  padding:15px 35px;
+  border-radius:50px;
+  border:none;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg, var(--accent), var(--success));
+  color:#fff;
+  box-shadow:0 5px 20px rgba(0,230,118,0.4);
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(0,230,118,0.6);
+}
+
+.btn-secondary{
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+  border:2px solid #fff;
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,0.3);
+  transform:translateY(-3px);
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 20px;
+  position:relative;
+  z-index:1;
+}
+
+/* ===== SECTION ===== */
+.section{
+  padding:60px 0;
+}
+
+.section-title{
+  text-align:center;
+  font-size:36px;
+  font-weight:700;
+  color:#fff;
+  margin-bottom:50px;
+  animation:fadeInUp 0.6s ease;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:30px;
+  margin-bottom:40px;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:var(--shadow);
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position:relative;
+  overflow:hidden;
+  animation:fadeInUp 0.8s ease;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition:0.5s;
+}
+
+.card:hover::before{
+  left:100%;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:var(--shadow-hover);
+}
+
+.card h2{
+  color:var(--primary);
+  font-size:24px;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.card h2::before{
+  content:'📊';
+  font-size:28px;
+  animation:rotate 3s infinite;
+}
+
+@keyframes rotate{
+  0%, 100%{transform:rotate(0deg)}
+  50%{transform:rotate(15deg)}
+}
+
+/* ===== ARTICLE CARD ===== */
+.article-list{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.article-item{
+  background:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding:20px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  border:2px solid transparent;
+}
+
+.article-item::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:4px;
+  height:100%;
+  background:linear-gradient(135deg, var(--accent), var(--success));
+  transform:scaleY(0);
+  transition:0.3s;
+}
+
+.article-item:hover::before{
+  transform:scaleY(1);
+}
+
+.article-item:hover{
+  transform:translateX(10px);
+  border-color:var(--accent);
+  background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+.article-icon{
+  font-size:32px;
+  animation:bounce 2s infinite;
+}
+
+.article-content{
+  flex:1;
+}
+
+.article-title{
+  font-weight:600;
+  font-size:16px;
+  color:var(--text-dark);
+  margin-bottom:5px;
+}
+
+.article-desc{
+  font-size:12px;
+  color:var(--text-light);
+}
+
+.article-arrow{
+  font-size:20px;
+  color:var(--accent);
+  transition:0.3s;
+}
+
+.article-item:hover .article-arrow{
+  transform:translateX(5px);
+}
 
 /* ===== PLANNER ===== */
-.planner{aspect-ratio:1/1}
+.planner-card{
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color:#fff;
+  min-height:500px;
+}
 
-/* ===== RESULT ===== */
-.result-box{
-  background:#e3f2fd;
-  padding:14px;
+.planner-card h2{
+  color:#fff;
+}
+
+.planner-card h2::before{
+  content:'💰';
+}
+
+.form-group{
+  margin-bottom:20px;
+  animation:slideIn 0.5s ease;
+}
+
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(-20px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+.form-input{
+  width:100%;
+  padding:15px;
+  border:2px solid rgba(255,255,255,0.3);
   border-radius:12px;
+  font-size:16px;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  backdrop-filter:blur(10px);
+  transition:0.3s;
+}
+
+.form-input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
+.form-input:focus{
+  outline:none;
+  border-color:var(--accent);
+  background:rgba(255,255,255,0.2);
+}
+
+.form-select{
+  width:100%;
+  padding:15px;
+  border:2px solid rgba(255,255,255,0.3);
+  border-radius:12px;
+  font-size:16px;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.form-select:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+.form-select option{
+  background:var(--primary);
+  color:#fff;
+}
+
+/* ===== RESULT BOX ===== */
+.result-box{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  padding:25px;
+  border-radius:15px;
+  border:2px solid rgba(255,255,255,0.3);
+  animation:scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn{
+  from{opacity:0;transform:scale(0.8)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.result-highlight{
+  font-size:32px;
+  font-weight:700;
+  color:var(--accent2);
+  margin:20px 0;
+  text-shadow:2px 2px 10px rgba(0,0,0,0.3);
+}
+
+/* ===== MARKET WIDGET ===== */
+.market-card{
+  background:var(--card-bg);
+  animation:fadeInUp 1s ease;
+}
+
+.market-card h2::before{
+  content:'📈';
+}
+
+.widget-container{
+  margin:20px 0;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ===== SPREADSHEET ===== */
+.spreadsheet-card{
+  background:var(--card-bg);
+  animation:fadeInUp 1.2s ease;
+}
+
+.spreadsheet-card h2::before{
+  content:'📊';
+}
+
+.spreadsheet-container{
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* ===== POPUP ===== */
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(5px);
   display:none;
   align-items:center;
   justify-content:center;
   z-index:9999;
+  animation:fadeIn 0.3s ease;
 }
-.popup.show{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.popup.show{
+  display:flex;
+}
+
 .popup-content{
   background:#fff;
   width:95%;
+  max-width:1200px;
   height:90%;
-  border-radius:18px;
+  border-radius:20px;
   position:relative;
+  animation:scaleIn 0.3s ease;
+  overflow:hidden;
 }
+
 .popup iframe{
   width:100%;
   height:100%;
   border:none;
-  border-radius:18px;
+  border-radius:20px;
 }
+
 .close-btn{
   position:absolute;
-  top:10px;
+  top:15px;
   right:15px;
-  font-size:24px;
-  background:none;
+  width:40px;
+  height:40px;
+  background:var(--danger);
+  color:#fff;
   border:none;
+  border-radius:50%;
+  font-size:24px;
+  cursor:pointer;
+  z-index:10;
+  transition:0.3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 5px 15px rgba(255,23,68,0.4);
+}
+
+.close-btn:hover{
+  transform:rotate(90deg) scale(1.1);
+  background:#d50000;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:rgba(0,0,0,0.9);
+  color:#fff;
+  text-align:center;
+  padding:30px 20px;
+  position:relative;
+  z-index:1;
+  margin-top:60px;
+}
+
+.footer-content{
+  max-width:800px;
+  margin:auto;
+}
+
+.footer p{
+  margin:10px 0;
+  opacity:0.8;
+}
+
+.social-links{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.social-icon{
+  width:40px;
+  height:40px;
+  background:rgba(255,255,255,0.1);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  transition:0.3s;
   cursor:pointer;
 }
 
-.hidden{display:none !important}
+.social-icon:hover{
+  background:var(--accent);
+  transform:translateY(-5px);
+}
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1}
+/* ===== UTILITY ===== */
+.hidden{
+  display:none !important;
+}
+
+/* ===== LOADING ANIMATION ===== */
+.loading{
+  display:inline-block;
+  width:20px;
+  height:20px;
+  border:3px solid rgba(255,255,255,0.3);
+  border-radius:50%;
+  border-top-color:#fff;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero h1{
+    font-size:32px;
+  }
+  
+  .hero p{
+    font-size:16px;
+  }
+  
+  .section-title{
+    font-size:28px;
+  }
+  
+  .grid{
+    grid-template-columns:1fr;
+  }
+  
+  .header-content{
+    justify-content:center;
+    gap:15px;
+  }
+  
+  .logo{
+    font-size:20px;
+  }
+  
+  .visitor-badge{
+    font-size:14px;
+    padding:8px 15px;
+  }
+}
+
+/* ===== SCROLL ANIMATION ===== */
+.fade-in{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 0.6s ease;
+}
+
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 </style>
 </head>
 
 <body>
 
-<div class="visitor-counter">
-  Total Visitors: <span id="visitorCount">12345</span>+
+<!-- ===== ANIMATED BACKGROUND ===== -->
+<div class="bg-animation">
+  <div class="floating-shape shape1"></div>
+  <div class="floating-shape shape2"></div>
+  <div class="floating-shape shape3"></div>
 </div>
 
-<h1 style="text-align:center">Market Snapshot & Live Dashboard</h1>
-
-<!-- ===== TOP GRID ===== -->
-<div class="main">
-
-  <!-- LEFT -->
-  <div class="card">
-    <h2>Great Books Great Takeaways</h2>
-    <div class="article-card" onclick="openArticle('articles/article1.html')">
-      Intelligent Investor – Buffett Rules
-    </div>
-    <div class="article-card" onclick="openArticle('articles/article2.html')">
-      Common Stocks & Uncommon Profits
-    </div>
-    <div class="article-card" onclick="openArticle('articles/article3.html')">
-      Berkshire Shareholder Letters
-    </div>
-    <div class="article-card" onclick="openArticle('articles/article4.html')">
-      How To Make money from Stock Market
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-content">
+    <div class="logo">📈 StockMarketForWealth.com</div>
+    <div class="visitor-badge">
+      <span>👥 Visitors:</span>
+      <span class="visitor-count" id="visitorCount">12,345</span>+
     </div>
   </div>
+</header>
 
-  <!-- RIGHT -->
-  <div class="card planner" id="step1">
-    <h2>Plan Your Investment</h2>
-    <input id="age" placeholder="Age">
-    <input id="income" placeholder="Monthly Income ₹">
-    <input id="savings" placeholder="Monthly Investment ₹">
-    <select id="risk">
-      <option value="">Risk Appetite</option>
-      <option value="low">Low</option>
-      <option value="medium">Moderate</option>
-      <option value="high">High</option>
-    </select>
-    <button onclick="nextStep()">Continue</button>
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="container">
+    <h1>Build Wealth Through Smart Investing</h1>
+    <p>Learn from the legends, plan your investments, and track live markets—all in one place</p>
+    <div class="cta-buttons">
+      <button class="btn btn-primary" onclick="scrollToPlanner()">Start Planning 🚀</button>
+      <button class="btn btn-secondary" onclick="scrollToArticles()">Learn More 📚</button>
+    </div>
   </div>
+</section>
 
-  <div class="card planner hidden" id="step2">
-    <h2>Goal Details</h2>
-    <input id="target" placeholder="Target Amount ₹">
-    <input id="years" placeholder="Years">
-    <input id="return" placeholder="Expected Return %">
-    <button onclick="generateReport()">Generate</button>
-  </div>
+<!-- ===== MAIN CONTENT ===== -->
+<div class="container">
+  
+  <!-- ===== ARTICLES & PLANNER SECTION ===== -->
+  <section class="section">
+    <div class="grid">
+      
+      <!-- ARTICLES -->
+      <div class="card fade-in" id="articlesSection">
+        <h2>Investment Wisdom</h2>
+        <div class="article-list">
+          <div class="article-item" onclick="openArticle('articles/article1.html')">
+            <div class="article-icon">📖</div>
+            <div class="article-content">
+              <div class="article-title">Intelligent Investor – Buffett Rules</div>
+              <div class="article-desc">Master the art of value investing</div>
+            </div>
+            <div class="article-arrow">→</div>
+          </div>
+          
+          <div class="article-item" onclick="openArticle('articles/article2.html')">
+            <div class="article-icon">💎</div>
+            <div class="article-content">
+              <div class="article-title">Common Stocks & Uncommon Profits</div>
+              <div class="article-desc">Growth investing principles</div>
+            </div>
+            <div class="article-arrow">→</div>
+          </div>
+          
+          <div class="article-item" onclick="openArticle('articles/article3.html')">
+            <div class="article-icon">📝</div>
+            <div class="article-content">
+              <div class="article-title">Berkshire Shareholder Letters</div>
+              <div class="article-desc">Warren Buffett's wisdom</div>
+            </div>
+            <div class="article-arrow">→</div>
+          </div>
+          
+          <div class="article-item" onclick="openArticle('articles/article4.html')">
+            <div class="article-icon">💰</div>
+            <div class="article-content">
+              <div class="article-title">How To Make Money from Stock Market</div>
+              <div class="article-desc">Practical strategies for success</div>
+            </div>
+            <div class="article-arrow">→</div>
+          </div>
+        </div>
+      </div>
 
-  <div class="card planner hidden" id="result">
-    <h2>Investment Strategy</h2>
-    <div class="result-box" id="report"></div>
-    <button onclick="location.reload()">Restart</button>
-  </div>
+      <!-- PLANNER -->
+      <div class="card planner-card fade-in" id="plannerSection">
+        
+        <!-- STEP 1 -->
+        <div id="step1">
+          <h2>Investment Planner</h2>
+          <div class="form-group">
+            <input type="number" class="form-input" id="age" placeholder="Your Age">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-input" id="income" placeholder="Monthly Income (₹)">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-input" id="savings" placeholder="Monthly Investment (₹)">
+          </div>
+          <div class="form-group">
+            <select class="form-select" id="risk">
+              <option value="">Select Risk Appetite</option>
+              <option value="low">🛡️ Low Risk (Conservative)</option>
+              <option value="medium">⚖️ Moderate Risk (Balanced)</option>
+              <option value="high">🚀 High Risk (Aggressive)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="step2" class="hidden">
+          <h2>Set Your Goal</h2>
+          <div class="form-group">
+            <input type="number" class="form-input" id="target" placeholder="Target Amount (₹)">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-input" id="years" placeholder="Investment Period (Years)">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-input" id="return" placeholder="Expected Annual Return (%)">
+          </div>
+          <button class="btn btn-primary" onclick="generateReport()">Generate Report 📊</button>
+          <button class="btn btn-secondary" onclick="backStep()" style="margin-top:10px">← Back</button>
+        </div>
+
+        <!-- RESULT -->
+        <div id="result" class="hidden">
+          <h2>Your Investment Strategy</h2>
+          <div class="result-box">
+            <div id="report"></div>
+          </div>
+          <button class="btn btn-primary" onclick="location.reload()" style="margin-top:20px">🔄 Start Over</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== LIVE MARKET SECTION ===== -->
+  <section class="section">
+    <div class="card market-card fade-in">
+      <h2>Live Market Updates</h2>
+      
+      <h3 style="color:var(--primary);margin:20px 0 10px">Indian Markets</h3>
+      <div class="widget-container">
+        <div class="tradingview-widget-container">
+          <script type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              { "proName": "NSE:NIFTY1!", "title": "NIFTY 50" },
+              { "proName": "NSE:BANKNIFTY1!", "title": "BANK NIFTY" },
+              { "proName": "BSE:SENSEX", "title": "SENSEX" }
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "colorTheme": "light",
+            "locale": "en"
+          }
+          </script>
+        </div>
+      </div>
+
+      <h3 style="color:var(--primary);margin:30px 0 10px">Global Markets</h3>
+      <div class="widget-container">
+        <div class="tradingview-widget-container">
+          <script type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              { "proName": "DJ:DJI", "title": "DOW JONES" },
+              { "proName": "TVC:US10Y", "title": "US 10Y BOND" },
+              { "proName": "FX_IDC:USDINR", "title": "USD / INR" }
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "colorTheme": "light",
+            "locale": "en"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SPREADSHEET SECTION ===== -->
+  <section class="section">
+    <div class="card spreadsheet-card fade-in">
+      <h2>Portfolio Tracker</h2>
+      <div class="spreadsheet-container">
+        <iframe 
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTo7pEzJNGuraAKv59dMrodBFqHKpUFYuFxe2f4h4Fx2ewaWmGjrM82SydPFeVgB99P9Bz3Bmsk_NJK/pubhtml?widget=true&amp;headers=false"
+          style="width:100%; height:450px; border:none;">
+        </iframe>
+      </div>
+    </div>
+  </section>
 
 </div>
 
-<!-- ===== LIVE MARKET BOX (FIXED) ===== -->
-<div class="full">
-  <div class="card">
-    <h2 style="text-align:center">Live Indian & Global Market Updates</h2>
-
-    <!-- INDIA TICKER -->
-    <div class="tradingview-widget-container">
-      <script type="text/javascript"
-        src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          { "proName": "NSE:NIFTY1!", "title": "NIFTY 50" },
-          { "proName": "NSE:BANKNIFTY1!", "title": "BANK NIFTY" },
-          { "proName": "BSE:SENSEX", "title": "SENSEX" }
-        ],
-        "showSymbolLogo": true,
-        "displayMode": "adaptive",
-        "colorTheme": "light",
-        "locale": "en"
-      }
-      </script>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-content">
+    <h3>StockMarketForWealth.com</h3>
+    <p>Empowering investors with knowledge and tools for financial freedom</p>
+    <p style="font-size:12px;opacity:0.6;margin-top:20px">
+      ⚠️ Disclaimer: Investment in securities market are subject to market risks. 
+      Read all related documents carefully before investing.
+    </p>
+    <div class="social-links">
+      <div class="social-icon">📧</div>
+      <div class="social-icon">💬</div>
+      <div class="social-icon">📱</div>
+      <div class="social-icon">🌐</div>
     </div>
-
-    <br>
-
-    <!-- GLOBAL TICKER -->
-    <div class="tradingview-widget-container">
-      <script type="text/javascript"
-        src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          { "proName": "DJ:DJI", "title": "DOW JONES" },
-          { "proName": "TVC:US10Y", "title": "US 10Y BOND" },
-          { "proName": "FX_IDC:USDINR", "title": "USD / INR" }
-        ],
-        "showSymbolLogo": true,
-        "displayMode": "adaptive",
-        "colorTheme": "light",
-        "locale": "en"
-      }
-      </script>
-    </div>
-
+    <p style="margin-top:20px;opacity:0.7">© 2024 StockMarketForWealth.com. All rights reserved.</p>
   </div>
-</div>
-
+</footer>
 
 <!-- ===== ARTICLE POPUP ===== -->
 <div id="articlePopup" class="popup" onclick="closeArticle()">
@@ -260,65 +916,156 @@ button:hover{background:#1565c0}
 </div>
 
 <script>
-/* VISITORS */
-let count = localStorage.getItem("fakeVisitors") || 12345;
-setInterval(()=>{
-  count = parseInt(count) + Math.floor(Math.random()*20 + 5);
-  visitorCount.innerText = count.toLocaleString();
-  localStorage.setItem("fakeVisitors",count);
-},3000);
+/* ===== VISITOR COUNTER ===== */
+let visitorCount = localStorage.getItem("fakeVisitors") || 12345;
+const visitorDisplay = document.getElementById("visitorCount");
 
-/* ARTICLE */
+function updateVisitors(){
+  visitorCount = parseInt(visitorCount) + Math.floor(Math.random() * 15 + 3);
+  visitorDisplay.innerText = visitorCount.toLocaleString();
+  localStorage.setItem("fakeVisitors", visitorCount);
+}
+
+setInterval(updateVisitors, 3000);
+updateVisitors();
+
+/* ===== SCROLL ANIMATIONS ===== */
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ===== SMOOTH SCROLL ===== */
+function scrollToPlanner(){
+  document.getElementById('plannerSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToArticles(){
+  document.getElementById('articlesSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ===== ARTICLE POPUP ===== */
 function openArticle(file){
-  articleFrame.src = file;
-  articlePopup.classList.add("show");
-}
-function closeArticle(){
-  articlePopup.classList.remove("show");
-  articleFrame.src = "";
+  document.getElementById('articleFrame').src = file;
+  document.getElementById('articlePopup').classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
-/* FORM */
-function nextStep(){
-  if(!age.value||!income.value||!savings.value||!risk.value){
-    alert("Fill all fields");
-    return;
+function closeArticle(){
+  document.getElementById('articlePopup').classList.remove('show');
+  document.getElementById('articleFrame').src = '';
+  document.body.style.overflow = 'auto';
+}
+
+/* ===== INVESTMENT PLANNER ===== */
+function validateStep1(){
+  const age = document.getElementById('age').value;
+  const income = document.getElementById('income').value;
+  const savings = document.getElementById('savings').value;
+  const risk = document.getElementById('risk').value;
+  
+  if(!age || !income || !savings || !risk){
+    alert('⚠️ Please fill all fields');
+    return false;
   }
-  step1.classList.add("hidden");
-  step2.classList.remove("hidden");
+  
+  if(parseInt(savings) > parseInt(income)){
+    alert('⚠️ Monthly investment cannot exceed monthly income');
+    return false;
+  }
+  
+  return true;
+}
+
+function nextStep(){
+  if(!validateStep1()) return;
+  
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.remove('hidden');
+}
+
+function backStep(){
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step1').classList.remove('hidden');
 }
 
 function generateReport(){
-  let t = +target.value;
-  let y = +years.value;
-  let r = +document.getElementById("return").value/100/12;
-  let n = y*12;
-  let sip = Math.round(t*r/(Math.pow(1+r,n)-1));
-
-  report.innerHTML = `
-    Monthly SIP Required: ₹${sip.toLocaleString()}<br><br>
-    Suggested for long-term disciplined investing.<br>
-    Market risks apply.
+  const target = parseFloat(document.getElementById('target').value);
+  const years = parseFloat(document.getElementById('years').value);
+  const returnRate = parseFloat(document.getElementById('return').value);
+  
+  if(!target || !years || !returnRate){
+    alert('⚠️ Please fill all fields');
+    return;
+  }
+  
+  // SIP Calculation
+  const monthlyRate = returnRate / 100 / 12;
+  const months = years * 12;
+  const sipAmount = Math.round(target * monthlyRate / (Math.pow(1 + monthlyRate, months) - 1));
+  
+  // Lump sum calculation
+  const lumpSum = Math.round(target / Math.pow(1 + returnRate/100, years));
+  
+  // Future value with current savings
+  const currentSavings = parseFloat(document.getElementById('savings').value);
+  const futureValue = Math.round(currentSavings * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
+  
+  const reportHTML = `
+    <div style="text-align:center">
+      <p style="font-size:16px;margin-bottom:15px">To reach your goal of</p>
+      <div class="result-highlight">₹${target.toLocaleString()}</div>
+      <p style="font-size:16px;margin-bottom:25px">in ${years} years</p>
+      
+      <div style="background:rgba(255,255,255,0.2);padding:20px;border-radius:12px;margin:20px 0">
+        <p style="font-size:14px;opacity:0.9;margin-bottom:8px">💰 Required Monthly SIP</p>
+        <p style="font-size:28px;font-weight:700;color:var(--accent2)">₹${sipAmount.toLocaleString()}</p>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.2);padding:20px;border-radius:12px;margin:20px 0">
+        <p style="font-size:14px;opacity:0.9;margin-bottom:8px">📊 OR One-Time Investment</p>
+        <p style="font-size:28px;font-weight:700;color:var(--accent2)">₹${lumpSum.toLocaleString()}</p>
+      </div>
+      
+      <div style="background:rgba(0,230,118,0.2);padding:15px;border-radius:12px;margin:20px 0;border:2px solid var(--accent)">
+        <p style="font-size:14px;opacity:0.9;margin-bottom:8px">🚀 Your Current ₹${currentSavings.toLocaleString()}/month will grow to</p>
+        <p style="font-size:24px;font-weight:700;color:var(--accent)">₹${futureValue.toLocaleString()}</p>
+      </div>
+      
+      <p style="font-size:13px;opacity:0.8;margin-top:20px;line-height:1.6">
+        💡 This projection assumes a ${returnRate}% annual return.<br>
+        Actual returns may vary. Start your SIP journey today!
+      </p>
+    </div>
   `;
-
-  step2.classList.add("hidden");
-  result.classList.remove("hidden");
+  
+  document.getElementById('report').innerHTML = reportHTML;
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
 }
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    closeArticle();
+  }
+});
+
+/* ===== INITIALIZE ===== */
+window.addEventListener('load', () => {
+  document.body.style.opacity = '1';
+});
 </script>
 
-<iframe 
-  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTo7pEzJNGuraAKv59dMrodBFqHKpUFYuFxe2f4h4Fx2ewaWmGjrM82SydPFeVgB99P9Bz3Bmsk_NJK/pubhtml?widget=true&amp;headers=false"
-  style="width:100%; height:350px; border:none;">
-</iframe>
-
-
-  
 </body>
 </html>
-
-
-
-
-
-
-
